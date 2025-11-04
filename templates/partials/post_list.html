@@ -1,0 +1,23 @@
+<ul class="space-y-6 mt-4 post-list" role="list">
+{% for post in posts %}
+    <li style="border-bottom: 1px solid #e5e7eb; padding-bottom: 1rem;">
+        <article>
+            <h3><a href="{{ post.permalink | safe }}" style="font-weight: 600;" aria-label="Read post: {{ post.title }}">{{ post.title }}</a></h3>
+            <div class="meta-text" style="margin-top: 0.25rem; display: block;">
+                {% if post.date %}Published {{ post.date | date(format="%B %d, %Y") }}{% endif %}
+                {% if post.updated %}
+                <span> • Last Updated {{ post.updated | date(format="%B %d, %Y") }}</span>
+                {% endif %}
+                {% if post.reading_time %}
+                <span> • {{ post.reading_time }} min read</span>
+                {% endif %}
+            </div>
+            {% if post.description %}
+            <p>{{ post.description }}</p>
+            {% elif post.summary %}
+            <p>{{ post.summary }}</p>
+            {% endif %}
+        </article>
+    </li>
+{% endfor %}
+</ul>

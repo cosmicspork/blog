@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="feeds-page">
+    <h1 class="mb-8">{{ page.title }}</h1>
+    
+    <div class="prose mb-8">
+        {{ page.content | safe }}
+    </div>
+
+    <!-- Main Feed -->
+    <section class="mb-8">
+        <h2 class="mb-4 border-b-gray pb-2">Main Feed</h2>
+        <div class="mb-4 px-4 py-16 bg-light rounded">
+                <a href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
+                    <h3 class="font-medium">All Posts</h3>
+                </a>
+                <p class="meta-text">Latest posts from all categories and tags</p>
+        </div>
+    </section>
+
+    <!-- Category Feeds -->
+    {% set categories_terms = get_taxonomy(kind="categories") %}
+    {% if categories_terms %}
+    <section class="mb-8">
+        <h2 class="mb-4 border-b-gray pb-2">Category Feeds</h2>
+        {% for category in categories_terms.items %}
+        <div class="mb-4 px-4 py-16 bg-light rounded">
+            <a href="{{ get_taxonomy_url(kind="categories", name=category.name) }}atom.xml">
+                <h3 class="font-medium">{{ category.name | title }}</h3>
+            </a>
+            <p class="meta-text">{{ category.pages | length }} post{% if category.pages | length !=
+                1 %}s{% endif %}</p>
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    <!-- Tag Feeds -->
+    {% set tags_terms = get_taxonomy(kind="tags") %}
+    {% if tags_terms %}
+    <section class="mb-8">
+        <h2 class="mb-4 border-b-gray pb-2">Tag Feeds</h2>
+        <div class="grid grid-2col">
+            {% for tag in tags_terms.items %}
+            <div class="px-4 py-16 bg-light rounded">
+                <a href="{{ get_taxonomy_url(kind="tags", name=tag.name) }}atom.xml">
+                    <h3 class="font-medium">#{{ tag.name }}</h3>
+                </a>
+                <p class="meta-text">{{ tag.pages | length }} post{% if tag.pages | length != 1
+                    %}s{% endif %}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+</div>
+{% endblock content %}

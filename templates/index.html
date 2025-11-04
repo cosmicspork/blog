@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{ section.content | safe }}
+
+{% set posts_section = get_section(path="posts/_index.md") %}
+{% if posts_section and posts_section.pages %}
+{% set recent_posts = posts_section.pages | filter(attribute="date") | sort(attribute="date") | reverse | slice(end=5) %}
+{% if recent_posts %}
+<section aria-labelledby="recent-posts-heading">
+<h2 id="recent-posts-heading" class="mb-8">Recent Posts</h2>
+{% set posts = recent_posts %}
+{% include "partials/post_list.html" %}
+<div style="margin-top: 1.5rem;">
+    <a href="/posts/" aria-label="View all blog posts">View all posts →</a>
+</div>
+</section>
+{% endif %}
+{% endif %}
+{% endblock content %}

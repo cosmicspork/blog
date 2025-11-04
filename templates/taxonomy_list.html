@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ taxonomy.name | title }}{% endblock title %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="mb-8">{{ taxonomy.name }}</h1>
+</div>
+
+<div class="grid grid-2col">
+{% for term in terms %}
+    <div class="bg-light rounded" style="padding-left: 1rem; padding-right: 1rem; padding-top: 4rem; padding-bottom: 4rem;">
+        <a href="{{ term.permalink | safe }}">
+            <h3 style="font-weight: 500;">{{ term.name }}</h3>
+        </a>
+        <p class="meta-text">{{ term.pages | length }} post{% if term.pages | length != 1 %}s{% endif %}</p>
+    </div>
+{% endfor %}
+</div>
+{% endblock content %}

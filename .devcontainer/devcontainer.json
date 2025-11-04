@@ -1,0 +1,27 @@
+{
+    "name": "blog",
+    "dockerFile": "Dockerfile",
+    "forwardPorts": [
+        1111,
+        1024
+    ],
+    "portsAttributes": {
+        "1111": {
+            "label": "Zola Dev Server",
+            "onAutoForward": "notify"
+        },
+        "1024": {
+            "label": "Live Reload Server",
+            "onAutoForward": "ignore"
+        }
+    },
+    "remoteUser": "vscode",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "DavidAnson.vscode-markdownlint",
+                "streetsidesoftware.code-spell-checker"
+            ]
+        }
+    }
+}

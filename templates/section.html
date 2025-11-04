@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section aria-labelledby="section-heading">
+<h1 id="section-heading" class="mb-8">{{ section.title }}</h1>
+{{ section.content | safe }}
+
+{% if config.extra.list_pages %}
+{% if paginator %}
+{% set pages = paginator.pages | filter(attribute="date") | sort(attribute="date") | reverse %}
+{% else %}
+{% set pages = section.pages | filter(attribute="date") | sort(attribute="date") | reverse %}
+{% endif %}
+{% set posts = pages %}
+{% include "partials/post_list.html" %}
+{% if paginator %}
+<nav class="mt-8 text-center" role="navigation" aria-label="Pagination navigation">
+    {% if paginator.previous %}
+        <a href="{{ paginator.first }}" aria-label="Go to first page">&lt;&lt; First</a> 
+        <a href="{{ paginator.previous }}" aria-label="Go to previous page">&lt; Previous</a>
+    {% endif %} 
+    <span class="mx-2" aria-current="page">Page {{ paginator.current_index }} of {{ paginator.number_pagers }}</span> 
+    {% if paginator.next %}
+        <a href="{{ paginator.next }}" aria-label="Go to next page">Next &gt;</a> 
+        <a href="{{ paginator.last }}" aria-label="Go to last page">Last &gt;&gt;</a>
+    {% endif %}
+</nav>
+{% endif %}
+{% endif %}
+</section>
+{% endblock content %}

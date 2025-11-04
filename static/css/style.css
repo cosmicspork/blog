@@ -1,0 +1,398 @@
+html,
+body {
+  background: white;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  color: #374151;
+  font-family: monospace;
+  font-size: 1rem;
+  line-height: 1.625;
+  margin: 0;
+  min-height: 100%;
+  overflow-wrap: break-word;
+}
+
+/* Headings */
+h1 { 
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+  color: #111827;
+}
+
+h2 { 
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+  color: #111827;
+}
+
+h3 { 
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+  color: #111827;
+}
+
+h4 { 
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+  color: #111827;
+}
+
+h5 { 
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  color: #111827;
+}
+
+h6 { 
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  color: #111827;
+}
+
+/* Anchor link hover effect */
+h1 a[aria-label^="Anchor link"],
+h2 a[aria-label^="Anchor link"],
+h3 a[aria-label^="Anchor link"],
+h4 a[aria-label^="Anchor link"],
+h5 a[aria-label^="Anchor link"],
+h6 a[aria-label^="Anchor link"] {
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+  margin-left: 0.5rem;
+}
+
+h1:hover a[aria-label^="Anchor link"],
+h2:hover a[aria-label^="Anchor link"],
+h3:hover a[aria-label^="Anchor link"],
+h4:hover a[aria-label^="Anchor link"],
+h5:hover a[aria-label^="Anchor link"],
+h6:hover a[aria-label^="Anchor link"] {
+  opacity: 1;
+}
+
+/* Text elements */
+p { 
+  margin-bottom: 1rem;
+  color: #374151;
+  line-height: 1.625;
+}
+
+a { 
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #1e40af;
+}
+
+/* Lists */
+ul { 
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
+ol { 
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  list-style-type: decimal;
+}
+
+li { 
+  margin-bottom: 0.5rem;
+}
+
+ul ul, ol ul { 
+  list-style-type: disc;
+  margin-top: 0.5rem;
+}
+
+ul ol, ol ol { 
+  list-style-type: decimal;
+  margin-top: 0.5rem;
+}
+
+/* HR styling */
+hr {
+  margin: 2rem 0;
+  text-align: center;
+  border: 0;
+}
+
+hr:before {
+  content: '/////';
+}
+
+hr:after {
+  content: attr(data-content) '/////';
+}
+
+/* Target highlighting */
+*:target {
+  background-color: #fef08a;
+}
+
+/* Tables */
+table { 
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px solid #1f2937;
+  border-collapse: collapse;
+  padding: 0.5rem;
+}
+
+/* Code styling */
+code {
+  background-color: #fdf6e3;
+  color: #657b83;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+pre {
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  border-radius: 0.5rem;
+}
+
+pre code {
+  display: block;
+  padding: 1rem;
+  font-size: 0.875rem;
+  /* Let Zola's inline styles handle the colors */
+}
+
+/* Blockquotes */
+blockquote {
+  font-style: italic;
+  border: 1px solid #1f2937;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f9fafb;
+}
+
+blockquote p {
+  margin: 0;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto 1rem auto;
+}
+
+/* Footnotes */
+.footnote-definition {
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.footnote-definition:target {
+  background-color: #fef08a;
+  color: #111827;
+}
+
+.footnote-definition p {
+  display: inline;
+}
+
+/* Layout classes */
+.post-meta {
+  text-align: right;
+}
+
+nav,
+.taxonomies {
+  text-align: center;
+}
+
+/* Layout utilities */
+.container {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-2col {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+/* Color utilities */
+.meta-text {
+  color: #6b7280;
+}
+
+.bg-light {
+  background-color: #f9fafb;
+}
+
+/* Component utilities */
+.tag {
+  display: inline-block;
+  background-color: #dbeafe;
+  color: #1e40af;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.25rem;
+  text-decoration: none;
+}
+
+.tag:hover {
+  background-color: #bfdbfe;
+}
+
+.tag-category {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.tag-category:hover {
+  background-color: #e5e7eb;
+}
+
+.rounded {
+  border-radius: 0.5rem;
+}
+
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.mt-16 {
+  margin-top: 4rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.border-b-gray {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.text-6xl {
+  font-size: 3.75rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.transition-colors {
+  transition-property: color, background-color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.prose {
+  max-width: none;
+}
+
+/* Meta text for labels before tags/categories */
+.meta-text.tag-label {
+  margin-right: 0.5rem;
+}
+
+/* Paragraph spacing in post lists */
+.post-list p {
+  margin-top: 0.5rem;
+}
+
+/* Skip to content link for accessibility */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: -9999px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 1000;
+  border-radius: 4px;
+}
+
+.skip-to-content:focus {
+  top: 6px;
+  left: 6px;
+}
