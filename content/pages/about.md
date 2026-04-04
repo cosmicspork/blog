@@ -13,4 +13,6 @@ Feel free to reach out if you have questions, suggestions, or just want to say h
 
 `joshbowen [at] protonmail [dot] com`
 
+[GitHub](https://github.com/cosmicspork)
+
 Thanks for visiting!
