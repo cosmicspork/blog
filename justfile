@@ -6,9 +6,9 @@ dev:
 build:
     zola build
 
-# Deploy to Cloudflare Pages
+# Deploy to Cloudflare Workers static assets
 deploy: build
-    wrangler deploy
+    bunx wrangler deploy
 
 # Create a new blog post
 post:
