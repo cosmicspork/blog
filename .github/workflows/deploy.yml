@@ -1,0 +1,39 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+
+# Cancel a superseded deploy rather than letting two runs race to publish.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Pinned to v0.21.0: config.toml's [markdown] highlight_code/highlight_theme
+      # fields were replaced by a new `highlighting` config in zola v0.22.0's
+      # switch from syntect to giallo. Bump this once config.toml is migrated.
+      - name: Install Zola
+        run: |
+          curl -sL https://github.com/getzola/zola/releases/download/v0.21.0/zola-v0.21.0-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          sudo mv zola /usr/local/bin/zola
+          zola --version
+
+      - name: Build the site
+        run: zola build
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install wrangler
+        run: bun install --frozen-lockfile
+
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
