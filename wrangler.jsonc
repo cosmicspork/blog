@@ -1,7 +1,12 @@
 {
-    "name": "weblog",
-    "compatibility_date": "2025-07-31",
-    "assets": { 
-        "directory": "./public/" 
-    }
+  // Static assets only, no Worker script: the blog is a plain Zola-built
+  // site with no server-rendered or edge-computed routes.
+  "name": "blog",
+  "compatibility_date": "2026-07-05",
+  "assets": {
+    "directory": "./public",
+    // Zola renders a custom templates/404.html into public/404.html.
+    "not_found_handling": "404-page"
+  }
+  // No routes/custom domain here; those are attached in the dashboard later.
 }

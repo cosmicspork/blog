@@ -1,0 +1,70 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  # Build (but do not deploy) on PRs, so the pipeline is exercised before it
+  # is trusted with main. Without this the workflow's first ever run would be
+  # a live deploy.
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Only what checkout needs; the deploy authenticates with its own API token.
+permissions:
+  contents: read
+
+# Queue deploys rather than cancelling them. Cancelling does not prevent two
+# runs from racing, it just aborts one part-way through uploading assets.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      # Zola publishes no checksum file, so the hash below was computed from the
+      # released asset itself. Recompute it when bumping the version:
+      #   curl -sSfL <url> | sha256sum
+      - name: Install Zola
+        env:
+          ZOLA_VERSION: "0.22.1"
+          ZOLA_SHA256: "0ca09aa40376aaa9ddfb512ff9ad963262ef95edb0d0f2d5ec6961b6f5cf22ef"
+        run: |
+          set -euo pipefail
+          url="https://github.com/getzola/zola/releases/download/v${ZOLA_VERSION}/zola-v${ZOLA_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          curl -sSfL -o zola.tar.gz "$url"
+          echo "${ZOLA_SHA256}  zola.tar.gz" | sha256sum -c -
+          tar xzf zola.tar.gz
+          sudo mv zola /usr/local/bin/zola
+          rm zola.tar.gz
+          zola --version
+
+      - name: Build the site
+        run: zola build
+
+      # wrangler will happily publish an empty directory, which would blank the
+      # site. 404.html is checked because wrangler.jsonc's not_found_handling
+      # depends on it existing.
+      - name: Verify build output
+        run: |
+          set -euo pipefail
+          test -s public/index.html
+          test -s public/404.html
+          echo "built $(find public -type f | wc -l) files"
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install wrangler
+        run: bun install --frozen-lockfile
+
+      - uses: cloudflare/wrangler-action@v3
+        if: github.event_name != 'pull_request'
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy

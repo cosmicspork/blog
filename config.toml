@@ -12,8 +12,7 @@ taxonomies = [
 ]
 
 [markdown]
-highlight_code = true
-highlight_theme = "solarized-light"
+highlighting = { theme = "solarized-light" }
 bottom_footnotes = true
 insert_anchor_links = "right"
 
